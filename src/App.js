@@ -1,25 +1,51 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Header from "./components/Header";
+import Characters from "./components/Characters";
+import Search from "./components/Search";
 
-function App() {
+import "./App.css";
+
+const App = () => {
+  const [items, setItems] = useState([]);
+  const [filterItems, setFilterItems] = useState([]);
+  const [mode, setMode] = useState(0); //0 - all characters, 1 - filter characters
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get(`https://thronesapi.com/api/v2/Characters`, { method: "GET" })
+      .then((response) => {
+        setItems(response.data);
+      });
+    setIsLoading(false);
+  }, []);
+
+  const getItem = (character) => {
+    if (!character) {
+      setMode(0);
+      return;
+    }
+    const filterItems = items.filter(item => {
+      const name = item.fullName.toLowerCase();
+      return  name.includes(character)
+    })
+    setFilterItems(filterItems);
+    setMode(1)
+  }  
+
+  const showAll = () => {
+    setMode(0)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Header />
+      <Search  getItem={getItem} showAll={showAll}/>
+      <Characters isLoading={isLoading} items={items} filterItems={filterItems} mode={mode} />
     </div>
   );
-}
+};
 
 export default App;
