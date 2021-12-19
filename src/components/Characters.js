@@ -6,7 +6,6 @@ const Characters = ({ items, filterItems, mode }) => {
   const filterCharacters = filterItems.map((item) => (
     <Card key={item.id} item={item} />
   ));
-
   return (
     <section className="characters">
       {mode === 0 ? allCharacters : filterCharacters}
@@ -14,4 +13,4 @@ const Characters = ({ items, filterItems, mode }) => {
   );
 };
 
-export default Characters;
+export default React.memo(Characters);

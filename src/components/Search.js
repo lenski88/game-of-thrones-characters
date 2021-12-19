@@ -14,15 +14,17 @@ const Search = ({ getItem, showAll }) => {
   const showAllHandler = () => {
     showAll();
   };
-
   return (
     <div className="search">
-      <button className="btn" onClick={showAllHandler}>Show all</button>
+      <button className="btn" onClick={showAllHandler}>
+        Show all
+      </button>
       <input
         type="text"
         value={text}
         onChange={inputHandler}
         placeholder="Search"
+        autoFocus
       />
       <button className="btn" onClick={buttonHandler}>
         Search
@@ -31,4 +33,4 @@ const Search = ({ getItem, showAll }) => {
   );
 };
 
-export default Search;
+export default React.memo(Search);
