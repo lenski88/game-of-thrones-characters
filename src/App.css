@@ -138,6 +138,20 @@ ul li {
   animation: spinner-animate 1s linear infinite;
 }
 
+.pagination {
+ display: flex;
+ justify-content: center;
+ font-size: 2.5rem;
+ margin-bottom: 10px;
+}
+.pagination li:not(:last-child) {
+  margin-right: 20px;
+}
+
+.pagination li a {
+  color: #b9540c
+}
+
 @keyframes spinner-animate {
   from {
     transform: rotate(0deg);
